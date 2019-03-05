@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+
 export class Clients extends Component {
   render() {
     const { clients } = this.props;
@@ -75,4 +79,9 @@ Clients.defaultProps = {
   ]
 };
 
-export default Clients;
+export default compose(
+  firestoreConnect([{ collection: "clients" }]),
+  connect((state, props) => ({
+    clients: state.firestore.ordered.clients
+  }))
+)(Clients);
