@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
+
 import { Link } from "react-router-dom";
 
 import { compose } from "redux";
@@ -58,26 +60,31 @@ export class Clients extends Component {
   }
 }
 
-Clients.defaultProps = {
-  clients: [
-    {
-      id: "42342",
-      firstName: "Kevin",
-      lastName: "Johnson",
-      email: "kevin@gmail.com",
-      phone: "555-555-5555",
-      balance: "100"
-    },
-    {
-      id: "jdklfjas",
-      firstName: "Kevin",
-      lastName: "Johnson",
-      email: "kevin@gmail.com",
-      phone: "555-555-5555",
-      balance: "541.12546"
-    }
-  ]
-};
+// Clients.defaultProps = {
+//   clients: [
+//     {
+//       id: "42342",
+//       firstName: "Kevin",
+//       lastName: "Johnson",
+//       email: "kevin@gmail.com",
+//       phone: "555-555-5555",
+//       balance: "100"
+//     },
+//     {
+//       id: "jdklfjas",
+//       firstName: "Kevin",
+//       lastName: "Johnson",
+//       email: "kevin@gmail.com",
+//       phone: "555-555-5555",
+//       balance: "541.12546"
+//     }
+//   ]
+// };
+
+Clients.propTypes = {
+  firestore: PropTypes.object.isRequired,
+  clients: PropTypes.array,
+}
 
 export default compose(
   firestoreConnect([{ collection: "clients" }]),
