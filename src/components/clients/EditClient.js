@@ -56,8 +56,6 @@ export class EditClient extends Component {
       .then(() => history.push('/'));
   }
 
-
-
   onChange = (e) => {
     // console.log(e.target.value);
     this.setState({
