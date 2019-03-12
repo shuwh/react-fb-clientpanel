@@ -25,13 +25,38 @@ class Settings extends Component {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label htmlFor="disableBalanceOnAdd">
+                <label
+                  htmlFor="disableBalanceOnAdd"
+                  // className="form-check-label"
+                >
                   Disable Balance On Add
-                </label>
+                </label>{" "}
                 <input
+                  // className="form-check-input"
                   type="checkbox"
                   id="disableBalanceOnAdd"
                   checked={!!disableBalanceAdd}
+                  onChange={this.props.onDisableBalanceOnAdd}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="disableBalanceOnEdit">
+                  Disable Balance On Edit
+                </label>{" "}
+                <input
+                  type="checkbox"
+                  id="disableBalanceOnEdit"
+                  checked={!!disableBalanceEdit}
+                  onChange={this.props.onDisableBalanceOnEdit}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="allowRegistration">Allow Registration</label>{" "}
+                <input
+                  type="checkbox"
+                  id="allowRegistration"
+                  checked={!!allowRegistration}
+                  onChange={this.props.onSetAllowRegistration}
                 />
               </div>
             </form>

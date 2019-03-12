@@ -21,7 +21,7 @@ const settingsReducer = (state = initialState, action) => {
     case actionTypes.ALLOW_REGISTRATION:
       return {
         ...state,
-        allowRegistration: state.allowRegistration
+        allowRegistration: !state.allowRegistration
       };
     default:
       return state;
