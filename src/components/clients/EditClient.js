@@ -10,64 +10,32 @@ import { firestoreConnect } from "react-redux-firebase";
 import Spinner from '../layout/Spinner'
 
 export class EditClient extends Component {
-  state = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    balance: '',
-  };
-
-  // static getDerivedStateFromProps(props, state) {
-  //   const { client } = props;
-  //   if (client) {
-  //     return {
-  //       firstName: client.firstName,
-  //       lastName: client.lastName,
-  //       email: client.email,
-  //       phone: client.phone,
-  //       balance: client.balance,
-  //     };
-  //   }
-  //   return null;
-  // }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps.client !== this.props.client) {
-      const { firstName, lastName, email, phone, balance } = this.props.client;
-      this.setState({
-        firstName,
-        lastName,
-        email,
-        phone,
-        balance,
-      })
-    }
+  constructor(props) {
+    super(props);
+    this.firstNameInput = React.createRef();
+    this.lastNameInput = React.createRef();
+    this.emailInput = React.createRef();
+    this.phoneInput = React.createRef();
+    this.balanceInput = React.createRef();
   }
 
   onSubmit = (e) => {
     e.preventDefault();
     const { firestore, history, client } = this.props;
     const updClient = {
-      ...this.state,
-      balance: this.state.balance === '' ? 0 : parseFloat(this.state.balance),
+      firstName: this.firstNameInput.current.value,
+      lastName: this.lastNameInput.current.value,
+      email: this.emailInput.current.value,
+      phone: this.phoneInput.current.value,
+      balance: this.balanceInput.current.value === '' ? 0 : this.balanceInput.current.value,
     }
     firestore.update({ collection: 'clients', doc: client.id }, updClient)
       .then(() => history.push('/'));
   }
 
-  onChange = (e) => {
-    // console.log(e.target.value);
-    this.setState({
-      [e.target.id]: e.target.value,
-    })
-  }
-
-
   render() {
     const { client } = this.props;
     if (client) {
-      const { firstName, lastName, email, phone, balance } = this.state;
       return (
         <div>
           <div className="row">
@@ -89,8 +57,8 @@ export class EditClient extends Component {
                     id="firstName"
                     minLength="2"
                     required
-                    onChange={this.onChange}
-                    value={firstName}
+                    ref={this.firstNameInput}
+                    defaultValue={client.firstName}
                     placeholder={"Enter First Name..."}
                   />
                 </div>
@@ -102,8 +70,8 @@ export class EditClient extends Component {
                     id="lastName"
                     minLength="2"
                     required
-                    onChange={this.onChange}
-                    value={lastName}
+                    ref={this.lastNameInput}
+                    defaultValue={client.lastName}
                     placeholder={"Enter Last Name..."}
                   />
                 </div>
@@ -113,8 +81,8 @@ export class EditClient extends Component {
                     type="email"
                     className="form-control"
                     id="email"
-                    onChange={this.onChange}
-                    value={email}
+                    ref={this.emailInput}
+                    defaultValue={client.email}
                     placeholder={"Enter Email..."}
                   />
                 </div>
@@ -124,8 +92,8 @@ export class EditClient extends Component {
                     type="text"
                     className="form-control"
                     id="phone"
-                    onChange={this.onChange}
-                    value={phone}
+                    ref={this.phoneInput}
+                    defaultValue={client.phone}
                     placeholder={"Enter Phone..."}
                   />
                 </div>
@@ -135,8 +103,8 @@ export class EditClient extends Component {
                     type="text"
                     className="form-control"
                     id="balance"
-                    onChange={this.onChange}
-                    value={balance}
+                    ref={this.balanceInput}
+                    defaultValue={client.balance}
                     placeholder={"Enter Balance..."}
                   />
                 </div>
