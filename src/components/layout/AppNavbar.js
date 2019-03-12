@@ -5,6 +5,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 
+
 class AppNavbar extends Component {
   state = {
     isAuthenticated: false,
@@ -24,7 +25,7 @@ class AppNavbar extends Component {
   }
 
   onLogoutClick = (e) => {
-    const { firebase } = this.props;
+    const { firebase, notifyUser } = this.props;
     firebase.logout();
   }
 

@@ -10,6 +10,8 @@ import 'firebase/firestore' // <- needed if using firestore
 // import 'firebase/functions' // <- needed if using httpsCallable
 import { reduxFirestore, firestoreReducer } from 'redux-firestore' // <- needed if using firestore
 
+import notifyReducer from './reducers/notifyReducer'
+
 const firebaseConfig = {
   apiKey: "AIzaSyAFKPa3FKfxFEZ0pffJoD6XnDBjBbEAT8k",
   authDomain: "reactclientpanel-e7d3f.firebaseapp.com",
@@ -41,7 +43,8 @@ const createStoreWithFirebase = compose(
 // Add firebase to reducers
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
-  firestore: firestoreReducer // <- needed if using firestore
+  firestore: firestoreReducer, // <- needed if using firestore
+  notify: notifyReducer
 })
 
 // Create store with reducers and initial state
