@@ -26,6 +26,7 @@ class AppNavbar extends Component {
   onLogoutClick = e => {
     const { firebase } = this.props;
     firebase.logout();
+    // localStorage.removeItem("settings");
   };
 
   render() {
@@ -87,12 +88,14 @@ class AppNavbar extends Component {
 
 AppNavbar.propTypes = {
   firebase: PropTypes.object.isRequired,
-  auth: PropTypes.object
+  auth: PropTypes.object,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(
   firebaseConnect(),
   connect((state, props) => ({
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    settings: state.settings
   }))
 )(AppNavbar);

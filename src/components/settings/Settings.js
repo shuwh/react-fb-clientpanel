@@ -11,6 +11,11 @@ class Settings extends Component {
       disableBalanceEdit,
       allowRegistration
     } = this.props.settings;
+    const {
+      onDisableBalanceOnAdd,
+      onDisableBalanceOnEdit,
+      onSetAllowRegistration
+    } = this.props;
     return (
       <div>
         <div className="row">
@@ -36,7 +41,7 @@ class Settings extends Component {
                   type="checkbox"
                   id="disableBalanceOnAdd"
                   checked={!!disableBalanceAdd}
-                  onChange={this.props.onDisableBalanceOnAdd}
+                  onChange={onDisableBalanceOnAdd}
                 />
               </div>
               <div className="form-group">
@@ -47,7 +52,7 @@ class Settings extends Component {
                   type="checkbox"
                   id="disableBalanceOnEdit"
                   checked={!!disableBalanceEdit}
-                  onChange={this.props.onDisableBalanceOnEdit}
+                  onChange={onDisableBalanceOnEdit}
                 />
               </div>
               <div className="form-group">
@@ -56,7 +61,7 @@ class Settings extends Component {
                   type="checkbox"
                   id="allowRegistration"
                   checked={!!allowRegistration}
-                  onChange={this.props.onSetAllowRegistration}
+                  onChange={onSetAllowRegistration}
                 />
               </div>
             </form>
