@@ -131,7 +131,8 @@ export class EditClient extends Component {
 }
 
 EditClient.propTypes = {
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(
