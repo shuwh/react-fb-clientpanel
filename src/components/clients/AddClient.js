@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-// import { compose } from "redux";
-// import { connect } from "react-redux";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 
 export class AddClient extends Component {
@@ -34,6 +34,7 @@ export class AddClient extends Component {
 
   render() {
     const { firstName, lastName, email, phone, balance } = this.state;
+    const { disableBalanceAdd } = this.props.settings;
     return (
       <div>
         <div className="row">
@@ -104,6 +105,7 @@ export class AddClient extends Component {
                   onChange={this.onChange}
                   value={balance}
                   placeholder={"Enter Balance..."}
+                  disabled={disableBalanceAdd}
                 />
               </div>
               <input
@@ -123,4 +125,9 @@ AddClient.propTypes = {
   firestore: PropTypes.object.isRequired
 };
 
-export default firestoreConnect()(AddClient);
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({
+    settings: state.settings
+  }))
+)(AddClient);

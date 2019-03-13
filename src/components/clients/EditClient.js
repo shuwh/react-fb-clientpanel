@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 
-import Spinner from '../layout/Spinner'
+import Spinner from "../layout/Spinner";
 
 export class EditClient extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export class EditClient extends Component {
     this.balanceInput = React.createRef();
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     const { firestore, history, client } = this.props;
     const updClient = {
@@ -27,14 +27,19 @@ export class EditClient extends Component {
       lastName: this.lastNameInput.current.value,
       email: this.emailInput.current.value,
       phone: this.phoneInput.current.value,
-      balance: this.balanceInput.current.value === '' ? 0 : this.balanceInput.current.value,
-    }
-    firestore.update({ collection: 'clients', doc: client.id }, updClient)
-      .then(() => history.push('/'));
-  }
+      balance:
+        this.balanceInput.current.value === ""
+          ? 0
+          : this.balanceInput.current.value
+    };
+    firestore
+      .update({ collection: "clients", doc: client.id }, updClient)
+      .then(() => history.push("/"));
+  };
 
   render() {
     const { client } = this.props;
+    const { disableBalanceEdit } = this.props.settings;
     if (client) {
       return (
         <div>
@@ -42,7 +47,7 @@ export class EditClient extends Component {
             <div className="col-md-6">
               <Link to="/" className="btn btn-link text-secondary">
                 <i className="fas fa-arrow-circle-left" /> Back To Dashboard
-            </Link>
+              </Link>
             </div>
           </div>
           <div className="card">
@@ -106,6 +111,7 @@ export class EditClient extends Component {
                     ref={this.balanceInput}
                     defaultValue={client.balance}
                     placeholder={"Enter Balance..."}
+                    disabled={disableBalanceEdit}
                   />
                 </div>
                 <input
@@ -125,16 +131,19 @@ export class EditClient extends Component {
 }
 
 EditClient.propTypes = {
-  firestore: PropTypes.object.isRequired,
-}
+  firestore: PropTypes.object.isRequired
+};
 
 export default compose(
-  firestoreConnect(props => [{
-    collection: 'clients',
-    doc: props.match.params.id,
-    storeAs: 'client'
-  }]),
-  connect(({ firestore: { ordered } }, props) => ({
+  firestoreConnect(props => [
+    {
+      collection: "clients",
+      doc: props.match.params.id,
+      storeAs: "client"
+    }
+  ]),
+  connect(({ firestore: { ordered }, settings }, props) => ({
     client: ordered.client && ordered.client[0],
-  })),
+    settings: settings
+  }))
 )(EditClient);
