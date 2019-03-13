@@ -48,6 +48,11 @@ class App extends Component {
                 />
                 <Route
                   exact
+                  path="/settings"
+                  component={UserIsAuthenticated(Settings)}
+                />
+                <Route
+                  exact
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
                 />
@@ -55,11 +60,6 @@ class App extends Component {
                   exact
                   path="/register"
                   component={UserIsNotAuthenticated(Register)}
-                />
-                <Route
-                  exact
-                  path="/settings"
-                  component={UserIsAuthenticated(Settings)}
                 />
               </Switch>
             </div>

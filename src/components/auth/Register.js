@@ -10,12 +10,14 @@ import Alert from "../layout/Alert";
 export class Register extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   };
 
   componentWillMount = () => {
-    const { allowRegister } = this.props.settings;
-    if (!allowRegister) {
+    const { allowRegistration } = this.props.settings;
+    if (!allowRegistration) {
+      console.log("trigger redirect from register");
       this.props.history.push("/");
     }
   };
@@ -29,7 +31,11 @@ export class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { firebase, notifyUser } = this.props;
-    const { email, password } = this.state;
+    const { email, password, confirmPassword } = this.state;
+    if (password !== confirmPassword) {
+      notifyUser("Passwords do not Match!", "error");
+      return;
+    }
     firebase
       .createUser({
         email,
@@ -40,7 +46,7 @@ export class Register extends Component {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, confirmPassword } = this.state;
     const { message, messageType } = this.props.notify;
     return (
       <div>
@@ -53,7 +59,7 @@ export class Register extends Component {
                 ) : null}
                 <h1 className="text-center">
                   <span className="text-primary">
-                    <i className="fas fa-lock" /> Register
+                    <i className="fas fa-user-plus" /> Register
                   </span>
                 </h1>
                 <form onSubmit={this.onSubmit}>
@@ -76,6 +82,17 @@ export class Register extends Component {
                       className="form-control"
                       placeholder="Enter Your Password"
                       value={password}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="confirmPassword">Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      className="form-control"
+                      placeholder="Confirm Your Password"
+                      value={confirmPassword}
                       onChange={this.onChange}
                     />
                   </div>
