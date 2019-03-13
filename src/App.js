@@ -11,6 +11,7 @@ import AddClient from "./components/clients/AddClient";
 import ClientDetails from "./components/clients/ClientDetails";
 import EditClient from "./components/clients/EditClient";
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import { UserIsAuthenticated, UserIsNotAuthenticated } from "./hoc/auth";
 import Settings from "./components/settings/Settings";
 
@@ -49,6 +50,11 @@ class App extends Component {
                   exact
                   path="/login"
                   component={UserIsNotAuthenticated(Login)}
+                />
+                <Route
+                  exact
+                  path="/register"
+                  component={UserIsNotAuthenticated(Register)}
                 />
                 <Route
                   exact

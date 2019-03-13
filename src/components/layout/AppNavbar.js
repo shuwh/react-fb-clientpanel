@@ -88,8 +88,8 @@ class AppNavbar extends Component {
                   </Link>
                 </div>
                 <div className="nav-item">
-                  <Link to="/signup" className="nav-link">
-                    Sign Up
+                  <Link to="/register" className="nav-link">
+                    Register
                   </Link>
                 </div>
               </div>

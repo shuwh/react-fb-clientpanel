@@ -7,10 +7,17 @@ import { firebaseConnect } from "react-redux-firebase";
 import { notifyUser } from "../../store/actions/notifyActions";
 import Alert from "../layout/Alert";
 
-export class Login extends Component {
+export class Register extends Component {
   state = {
     email: "",
     password: ""
+  };
+
+  componentWillMount = () => {
+    const { allowRegister } = this.props.settings;
+    if (!allowRegister) {
+      this.props.history.push("/");
+    }
   };
 
   onChange = e => {
@@ -24,12 +31,12 @@ export class Login extends Component {
     const { firebase, notifyUser } = this.props;
     const { email, password } = this.state;
     firebase
-      .login({
+      .createUser({
         email,
         password
       })
       .then(notifyUser("", ""))
-      .catch(err => notifyUser("Invalid Credentials", "error"));
+      .catch(err => notifyUser("User Already Exits", "error"));
   };
 
   render() {
@@ -46,7 +53,7 @@ export class Login extends Component {
                 ) : null}
                 <h1 className="text-center">
                   <span className="text-primary">
-                    <i className="fas fa-lock" /> Login
+                    <i className="fas fa-lock" /> Register
                   </span>
                 </h1>
                 <form onSubmit={this.onSubmit}>
@@ -74,7 +81,7 @@ export class Login extends Component {
                   </div>
                   <input
                     type="submit"
-                    value="Login"
+                    value="Register"
                     className="btn btn-primary btn-block"
                   />
                 </form>
@@ -87,18 +94,20 @@ export class Login extends Component {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   firebase: PropTypes.object.isRequired,
   notify: PropTypes.object.isRequired,
-  notifyUser: PropTypes.func.isRequired
+  notifyUser: PropTypes.func.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(
   firebaseConnect(),
   connect(
     (state, props) => ({
-      notify: state.notify
+      notify: state.notify,
+      settings: state.settings
     }),
     { notifyUser }
   )
-)(Login);
+)(Register);
